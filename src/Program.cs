@@ -121,7 +121,7 @@ namespace MdDox
                     case "-h":
                         return null;
                     case "--msdn":
-                    case "-s":
+                    case "-d":
                         options.MsdnLinks = true;
                         if (i + 1 < args.Length && !args[i + 1].StartsWith('-'))
                         {
@@ -211,16 +211,16 @@ namespace MdDox
                     }
                 }
                 DocumentationGenerator.GenerateMarkdown(
-                    rootType, 
-                    rootType == null ? myAssembly : null, 
-                    options.Recursive, 
-                    options.RecursiveAssemblies, 
-                    options.IgnoreAttributes, 
-                    options.IgnoreMethods, 
-                    options.MsdnLinks, options.MsdnView, 
+                    rootType,
+                    rootType == null ? myAssembly : null,
+                    options.Recursive,
+                    options.RecursiveAssemblies,
+                    options.IgnoreAttributes,
+                    options.IgnoreMethods,
+                    options.MsdnLinks, options.MsdnView,
                     options.ShowTitle,
                     options.Verbose,
-                    writer, 
+                    writer,
                     options.OutputFile);
             }
             catch (Exception exc)

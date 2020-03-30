@@ -220,8 +220,8 @@ namespace MdDox
         public static bool AssemblyFilter(
             Assembly assembly,
             Assembly rootAssembly,
-            List<string> recursiveAssemblies, 
-            bool recursiveAssemblyTraversal, 
+            List<string> recursiveAssemblies,
+            bool recursiveAssemblyTraversal,
             bool verbose)
         {
             if (assembly == rootAssembly) return true;
@@ -269,7 +269,7 @@ namespace MdDox
 
         static string TypeTitle(Type type)
         {
-            return type.ToNameString() + (type.IsEnum ? " Enum" : (type.IsValueType ? " Struct" : " Class"));
+            return type.ToNameString() + (type.IsEnum ? " Enum" : (type.IsValueType ? " Struct" : (type.IsInterface ? " Interface" : " Class")));
         }
 
         static (string cref, string innerText, string beforeText, string afterText) FindTagWithCref(string text, string tag)
@@ -342,30 +342,27 @@ namespace MdDox
         }
 
         /// <summary>
-        /// Write table of contents. It is a three column table with each cell containing 
+        /// Write table of contents. It is a three column table with each cell containing
         /// the link to the heading of the type.
         /// </summary>
         /// <param name="indexTitleText"></param>
-        public void WriteTypeIndex(string indexTitleText = "All types")
+        public void WriteTypeIndex(string indexTitleText = "Contents")
         {
             var namesForTOC = TypesToDocument
                 .Select(typeData => Writer.HeadingLink(TypeTitle(typeData.Type), TypeTitle(typeData.Type))).ToList();
             if (namesForTOC.Count == 0) return;
 
             if (indexTitleText != null) Writer.WriteH1(indexTitleText);
-            Writer.WriteTableTitle(" ", " ", " ");
-            var rowCount = namesForTOC.Count / 3 + (((namesForTOC.Count % 3) == 0) ? 0 : 1);
+            var rowCount = namesForTOC.Count;
             for (var i = 0; i < rowCount; i++)
             {
-                Writer.WriteTableRow(namesForTOC[i],
-                    rowCount + i < namesForTOC.Count ? namesForTOC[rowCount + i] : " ",
-                    rowCount * 2 + i < namesForTOC.Count ? namesForTOC[rowCount * 2 + i] : " ");
+                Writer.Write($"- {namesForTOC[i]}");
             }
         }
 
         /// <summary>
         /// Write markdown documentation for the enum type:
-        /// Examples, Remarks, 
+        /// Examples, Remarks,
         /// </summary>
         /// <param name="enumType"></param>
         public void DocumentEnum(Type enumType)
