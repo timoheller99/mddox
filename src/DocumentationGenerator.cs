@@ -53,10 +53,8 @@ namespace MdDox
                     return Writer.HeadingLink(TypeTitle(type), type.ToNameString());
                 }
                 if (msdnLinks &&
-                    type != typeof(string) &&
-                    !type.IsValueType &&
                     (type.Assembly.ManifestModule.Name.StartsWith("System.") ||
-                    type.Assembly.ManifestModule.Name.StartsWith("Microsoft.")))
+                     type.Assembly.ManifestModule.Name.StartsWith("Microsoft.")))
                 {
                     return Writer.Link(MsdnUrlForType(type, msdnView),
                         type.IsGenericTypeDefinition ? type.Name.CleanGenericTypeName() : type.ToNameString());
