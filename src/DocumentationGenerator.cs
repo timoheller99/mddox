@@ -254,7 +254,7 @@ namespace MdDox
 
         public void WriteDocumentTitle(Assembly assembly, string titleText = "API documentation")
         {
-            Writer.WriteH1($"{Path.GetFileName(assembly.ManifestModule.Name)} v.{assembly.GetName().Version} " +
+            Writer.WriteH1($"{Path.GetFileName(assembly.ManifestModule.Name)} v{assembly.GetName().Version} " +
                            titleText ?? "");
         }
 
